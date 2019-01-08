@@ -1,0 +1,51 @@
+landing:                 # Main action: A player can land when gliding and pressing sneak key.
+  force: 5               # Force of the falling down vector (use a lower value if if causes "moved too quickly errors"
+  damage:                # Damages received to the player which is landing
+    min_life: 4          # Min life the player will keep even if damages are higher than his life
+    reduction: 0.5       # Reduce damages taken by this factor (0.5 means half)
+  # Advanced
+  delay: 3000            # (milliseconds) Max time the landing is considered active (in case it is not cleaned up properly)
+  reset: 5               # (ticks) Delay after the Matrix landing is reset, after re-gliding / touching the ground, ...
+
+# Optional actions
+
+affect:                  # Affect nearby entities when landing
+  enable: true           # Require permission « ElytraLanding.damage » (and « ElytraLanding.landing »)
+  damages: 1.0           # Factor of damage quantity transmitted to entities (distance from player and entity reduces them)
+  distance: 10           # Max distance (in blocks) to look at entities which will take damages
+  push: 4                # Factor of push entities force (distance from player and entity reduces it)
+  types:                 # Types on which the damages are transmitted
+    animal: true
+    monster: true
+    player: false
+
+falling:                 # Fall smoothly when elytra breaks.
+  enable: true           # Require permission « ElytraLanding.smoothFall »
+  duration: 10           # (seconds) Duration for slow falling effect.
+
+launching:               # Easy launching from the ground
+  enable: true           # Require permission « ElytraLanding.launching »
+  force: 3               # Launching force (multiplier of the player direction vector)
+  # Advanced
+  max_pitch: -30.0       # If the pitch value (see it with F3) is higher the landing cannot be done
+
+particle:                # Show particles around the landing position
+  enable: true           # Require permission « ElytraLanding.landing »
+  name: DRAGON_BREATH    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+  amount: 10             # Number of particles to show in 360° range, 10 means 1 each 36°
+  distance: 5            # Max distance (in blocks) to particle effect will appears
+  duration: 20           # Number of time particles stays visible
+  step: 5                # Steps are the "rings" from player and max distance
+  step_delay: 3          # Delay (in server ticks) between the steps
+
+sound:                   # Play a sound when a player is landing
+  enable: true           # Require permission ElytraLanding.landing »
+  name: BLOCK_ANVIL_LAND # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+  pitch: 1.0             # Sound pitch value (normal play = 1, value can be from 0.4 to 2 if I remember well)
+  volume: 1.0            # Sound volume, from 0 to 1 (if I remember well)
+
+# Locale messages, you can use color code prefixed with « § »: https://wiki.ess3.net/mc/ (don't forget to adjust the symbol).
+messages:
+  configuration_reloaded: "§7[§e§lElytraLanding§7] §aConfiguration reloaded." # Message displayed when config is reloaded.
+  invalid_particle_name: "§cInvalid particle name, disabling particle effect" # Invalid particle name.
+  invalid_sound_name: "§cInvalid sound name, disabling sound effect"          # Invalid sound name.

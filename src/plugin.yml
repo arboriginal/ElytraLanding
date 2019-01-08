@@ -1,0 +1,57 @@
+name: ElytraLanding
+description: Landing with elytra and cause damages to entities.
+version: 0.1
+
+author: arboriginal
+#website: https://www.spigotmc.org/resources/...
+dev-url: https://github.com/arboriginal/ElytraLanding
+
+depend: []
+softdepend: []
+
+api-version: 1.13
+database: false
+
+main: me.arboriginal.ElytraLanding.Main
+
+commands:
+  el-reload:
+    description: Reload the configuration.
+    permission: ElytraLanding.reload
+
+permissions:
+  ElytraLanding.*:
+    description: Gives all permissions.
+    default: op
+    children:
+      ElytraLanding.auto: true
+      ElytraLanding.damage: true
+      ElytraLanding.landing: true
+      ElytraLanding.launching: true
+      ElytraLanding.reload: true
+      ElytraLanding.smoothFall: true
+
+  ElytraLanding.auto: # Require ElytraLanding.landing
+    description: Allows to auto landing.
+    default: false
+
+  ElytraLanding.damage: # Require ElytraLanding.landing
+    description: Allows to damage mobs when landing.
+    default: true
+
+  ElytraLanding.landing:
+    description: Allows to usethe landing feature.
+    default: true
+
+  ElytraLanding.launching:
+    description: Allows to use the easy launching feature.
+    default: true
+
+  ElytraLanding.reload:
+    description: Allows to reload the configuration.
+    default: false
+
+  ElytraLanding.smoothFall:
+    description: Allows to fall smoothly when elytra breaks.
+    default: true
+  
