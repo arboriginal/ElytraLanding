@@ -12,7 +12,10 @@ landing:                 # Main action: A player can land when gliding and press
 affect:                  # Affect nearby entities when landing
   enable: true           # Require permission « ElytraLanding.damage » (and « ElytraLanding.landing »)
   damages: 1.0           # Factor of damage quantity transmitted to entities (distance from player and entity reduces them)
-  distance: 10           # Max distance (in blocks) to look at entities which will take damages
+  distance:              # Max distance (in blocks) to look at entities which will take damages
+    x: 10
+    y: 3
+    z: 10
   push: 4                # Factor of push entities force (distance from player and entity reduces it)
   types:                 # Types on which the damages are transmitted
     animal: true

@@ -1,9 +1,9 @@
 name: ElytraLanding
 description: Landing with elytra and cause damages to entities.
-version: 0.1
+version: 0.2
 
 author: arboriginal
-#website: https://www.spigotmc.org/resources/...
+website: https://www.spigotmc.org/resources/elytralanding.63867/
 dev-url: https://github.com/arboriginal/ElytraLanding
 
 depend: []
@@ -54,4 +54,4 @@ permissions:
   ElytraLanding.smoothFall:
     description: Allows to fall smoothly when elytra breaks.
     default: true
-  
+

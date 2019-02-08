@@ -3,6 +3,7 @@ package me.arboriginal.ElytraLanding;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -247,20 +248,32 @@ public class Main extends JavaPlugin implements Listener {
     if (config.getBoolean("particle.enable")) particleEffect(player);
     if (!config.getBoolean("affect.enable")) return;
 
-    Vector vector  = player.getLocation().toVector();
-    double factor  = config.getDouble("affect.damages");
-    int    maxDist = config.getInt("affect.distance");
-    double pushMtp = config.getDouble("affect.push");
+    Location location = player.getLocation();
+    Vector   vector   = location.toVector();
+    double   factor   = config.getDouble("affect.damages");
+    double   pushMtp  = config.getDouble("affect.push");
+    int      maxDistX = config.getInt("affect.distance.x");
+    int      maxDistY = config.getInt("affect.distance.y");
+    int      maxDistZ = config.getInt("affect.distance.z");
 
-    for (Entity entity : player.getNearbyEntities(maxDist, maxDist, maxDist))
+    for (Entity entity : player.getNearbyEntities(maxDistX, maxDistY, maxDistZ))
       if (entity instanceof Damageable && ( // @formatter:off
            (config.getBoolean("affect.types.animal")  && entity instanceof Animals)
         || (config.getBoolean("affect.types.monster") && entity instanceof Monster)
         || (config.getBoolean("affect.types.player")  && entity instanceof Player)
       )) { // @formatter:on
-        double dist = player.getLocation().distance(entity.getLocation());
-        if (dist > maxDist) continue;
-        double fact = (maxDist - dist) / maxDist;
+        Location loc = entity.getLocation();
+        double distX = Math.abs(location.getX() - loc.getX());
+        double distY = Math.abs(location.getY() - loc.getY());
+        double distZ = Math.abs(location.getZ() - loc.getZ());
+        if (distX > maxDistX || distY > maxDistY || distZ > maxDistZ) continue;
+
+        double fact = ( // @formatter:off
+          (maxDistX - distX) / maxDistX + 
+          (maxDistY - distY) / maxDistY + 
+          (maxDistZ - distZ) / maxDistZ
+        ) / 3; // @formatter:on
+
         ((Damageable) entity).damage(fact * factor * damages, player);
         entity.setVelocity(entity.getLocation().toVector().subtract(vector).normalize().multiply(fact * pushMtp));
       }
