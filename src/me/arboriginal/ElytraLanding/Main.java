@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -167,6 +168,10 @@ public class Main extends JavaPlugin implements Listener {
     if (player.isGliding()) {
       landingReset(player);
       if (player.isSneaking()) landingInit(player);
+      if (config.getBoolean("swimming.enable") && checkUnderWater(player)) {
+        player.setGliding(false);
+        player.setSwimming(true);
+      }
     }
     else if (!checkUnderBlockEmpty(player)) landingReset(player);
   }
@@ -204,6 +209,18 @@ public class Main extends JavaPlugin implements Listener {
 
   private boolean checkUnderBlockEmpty(Player player) {
     return player.getLocation().getBlock().getRelative(BlockFace.DOWN).isEmpty();
+  }
+
+  private boolean checkUnderWater(Player player) {
+    Block block = player.getLocation().getBlock();
+    if (!block.isLiquid()) return false;
+    int over = config.getInt("swimming.blocks_over");
+    if (over == 0) return true;
+    for (int i = 0; i < over; i++) {
+      block = block.getRelative(BlockFace.UP);
+      if (!block.isLiquid()) return false;
+    }
+    return true;
   }
 
   private int elytraDamages(ItemStack elytra) {

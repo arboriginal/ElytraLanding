@@ -47,6 +47,10 @@ sound:                   # Play a sound when a player is landing
   pitch: 1.0             # Sound pitch value (normal play = 1, value can be from 0.4 to 2 if I remember well)
   volume: 1.0            # Sound volume, from 0 to 1 (if I remember well)
 
+swimming:                # When player gliding in elytra is enterring water and should swim instead 
+  enable: false          # if true, stop gliding
+  blocks_over: 4         # Minimum number of liquid blocks over the player position to consider this 
+
 # Locale messages, you can use color code prefixed with « § »: https://wiki.ess3.net/mc/ (don't forget to adjust the symbol).
 messages:
   configuration_reloaded: "§7[§e§lElytraLanding§7] §aConfiguration reloaded." # Message displayed when config is reloaded.
