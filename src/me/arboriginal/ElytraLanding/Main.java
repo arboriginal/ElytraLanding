@@ -108,9 +108,9 @@ public class Main extends JavaPlugin implements Listener {
 
     Player player = (Player) event.getEntity();
 
-    if (!player.hasPermission("ElytraLanding.landing")) return;
+    if (!player.hasPermission("ElytraLanding.landing") || !elytraValidity(player)) return;
     if ((!landings.containsKey(player.getUniqueId()) || System.currentTimeMillis() > landings.get(player.getUniqueId()))
-        && !player.hasPermission("ElytraLanding.auto") && !elytraValidity(player))
+        && !player.hasPermission("ElytraLanding.auto"))
       return;
 
     double damages = Math.min(
