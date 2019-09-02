@@ -27,6 +27,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -38,6 +40,7 @@ public class Main extends JavaPlugin implements Listener {
   private HashMap<UUID, BukkitRunnable> tasks;
   private FileConfiguration             config;
   private boolean                       ready = false;
+  private final String                  elgla = "el_gliding_activator";
 
   // ----------------------------------------------------------------------------------------------
   // JavaPlugin methods
@@ -124,10 +127,28 @@ public class Main extends JavaPlugin implements Listener {
 
   @EventHandler
   public void onEntityToggleGlide(EntityToggleGlideEvent event) {
-    if (event.isCancelled() || !config.getBoolean("falling.enable") || !(event.getEntity() instanceof Player)) return;
+    if (event.isCancelled() || !(event.getEntity() instanceof Player)) return;
+
     Player player = (Player) event.getEntity();
-    if (!player.isGliding() || !player.hasPermission("ElytraLanding.smoothFall")) return;
+
+    if (player.hasMetadata(elgla)) {
+      Long now = System.currentTimeMillis();
+
+      for (MetadataValue meta : player.getMetadata(elgla)) {
+        if (meta.asLong() < now + 1000) {
+          event.setCancelled(true);
+          player.removeMetadata(elgla, this);
+          return;
+        }
+      }
+    }
+
+    if (!config.getBoolean("falling.enable") || !player.isGliding()
+        || !player.hasPermission("ElytraLanding.smoothFall"))
+      return;
+
     ItemStack elytra = elytraWeared(player);
+
     if (elytra == null || elytraDamages(elytra) != Material.ELYTRA.getMaxDurability() - 1) return;
 
     player.addPotionEffect(new PotionEffect(
@@ -151,6 +172,8 @@ public class Main extends JavaPlugin implements Listener {
     stack.setAmount(stack.getAmount() - 1);
     player.getInventory().setItemInMainHand(stack);
     player.setVelocity(player.getLocation().getDirection().normalize().multiply(config.getDouble("launching.force")));
+    player.setMetadata(elgla, new FixedMetadataValue(this, System.currentTimeMillis()));
+    player.setGliding(true);
 
     new BukkitRunnable() {
       @Override
