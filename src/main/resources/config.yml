@@ -1,3 +1,9 @@
+# ----------------------------------------------------------------------------------------------------------------------
+# ${project.artifactId}, version ${project.version} -  Configuration file.
+# .
+# You will find an explanation of all parameters here:
+# https://github.com/arboriginal/${project.artifactId}/blob/master/src/main/resources/config.yml
+# ----------------------------------------------------------------------------------------------------------------------
 landing:                 # Main action: A player can land when gliding and pressing sneak key.
   force: 5               # Force of the falling down vector (use a lower value if if causes "moved too quickly errors"
   damage:                # Damages received to the player which is landing
@@ -56,3 +62,4 @@ messages:
   configuration_reloaded: "§7[§e§lElytraLanding§7] §aConfiguration reloaded." # Message displayed when config is reloaded.
   invalid_particle_name: "§cInvalid particle name, disabling particle effect" # Invalid particle name.
   invalid_sound_name: "§cInvalid sound name, disabling sound effect"          # Invalid sound name.
+  invalid_int_value: "§cInvalid value (must be > 0), 1 will be used instead"  # Invalid value in affect distance values
