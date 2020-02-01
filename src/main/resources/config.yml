@@ -27,6 +27,7 @@ affect:                  # Affect nearby entities when landing
     animal: true
     monster: true
     player: false
+    tamed: false
 
 falling:                 # Fall smoothly when elytra breaks.
   enable: true           # Require permission « ElytraLanding.smoothFall »

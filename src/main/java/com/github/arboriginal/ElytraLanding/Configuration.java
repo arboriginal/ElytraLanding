@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 class Configuration {
-    final boolean      HURT, HURT_A, HURT_M, HURT_P, FALL, SNDE, PCLE, LAUNCH, SWIM;
+    final boolean      HURT, HURT_A, HURT_M, HURT_P, HURT_T, FALL, SNDE, PCLE, LAUNCH, SWIM;
     final double       HURT_D, HURT_F, LAND_MTP, LAUNCH_FM, LAUNCH_MP, PCLR;
     final float        SNDP, SNDV;
     final int          HURT_X, HURT_Y, HURT_Z, LAND_MIN, LAND_REST, LAND_TIME, PCLA, PCLD, PCLL, PCLS, PCLT, SWIM_OB;
@@ -35,6 +35,7 @@ class Configuration {
             HURT_A = config.getBoolean("affect.types.animal");
             HURT_M = config.getBoolean("affect.types.monster");
             HURT_P = config.getBoolean("affect.types.player");
+            HURT_T = config.getBoolean("affect.types.tamed");
             HURT_D = config.getDouble("affect.damages");
             HURT_F = config.getDouble("affect.push");
             HURT_X = getPositiveNotNullInt(config, "affect.distance.x");
@@ -42,7 +43,7 @@ class Configuration {
             HURT_Z = getPositiveNotNullInt(config, "affect.distance.z");
         }
         else {
-            HURT_A = HURT_M = HURT_P = false;
+            HURT_A = HURT_M = HURT_P = HURT_T = false;
             HURT_D = HURT_F = 0;
             HURT_X = HURT_Y = HURT_Z = 0;
         }
