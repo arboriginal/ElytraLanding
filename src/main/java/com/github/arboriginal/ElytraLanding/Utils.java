@@ -1,9 +1,7 @@
 package com.github.arboriginal.ElytraLanding;
 
 import static com.github.arboriginal.ElytraLanding.Plugin.inst;
-
 import java.util.UUID;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -76,7 +74,7 @@ class Utils {
                    (inst.conf.HURT_A && entity instanceof Animals)
                 || (inst.conf.HURT_M && entity instanceof Monster)
                 || (inst.conf.HURT_P && entity instanceof Player)
-            ) && (inst.conf.HURT_T || !(entity instanceof Tameable)) || !((Tameable) entity).isTamed()) {
+            ) && (inst.conf.HURT_T || !(entity instanceof Tameable) || !((Tameable) entity).isTamed())) {
                 Location l = entity.getLocation();
                 double edX = Math.abs(x - l.getX()); if (edX > inst.conf.HURT_X) continue;
                 double edY = Math.abs(y - l.getY()); if (edY > inst.conf.HURT_Y) continue;
